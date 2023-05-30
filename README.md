@@ -1,6 +1,6 @@
 # discrete Walk-Jump Sampling (dWJS)
 
-This is the official open source repository for [discrete Walk-Jump Sampling](TODO) developed by [Prescient Design, a Genentech accelerator.](https://gene.com/prescient)
+This is the official open source repository for [discrete Walk-Jump Sampling](TODO) developed by [ncfrey](https://github.com/ncfrey), [djberenberg](https://github.com/djberenberg), [kleinhenz](https://github.com/kleinhenz), and [saeedsaremi](https://github.com/saeedsaremi), from [Prescient Design, a Genentech accelerator.](https://gene.com/prescient)
 
 
 ## Notes
