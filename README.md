@@ -6,11 +6,10 @@ This is the official open source repository for [discrete Walk-Jump Sampling](TO
 ## Notes
 
 
-## Setup and Usage
-### Environment
-We used the following GPU-enabled setup with `conda` (originally run in an HPC environment with NVIDIA A100 GPUs).
-```
-
+## Setup
+Assuming you have [miniconda](https://docs.conda.io/en/latest/miniconda.html) installed, clone the repository, navigate inside, and run:
+```bash
+./scripts/install.sh
 ```
 
 
