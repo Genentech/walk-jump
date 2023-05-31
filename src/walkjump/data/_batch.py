@@ -1,6 +1,5 @@
-from dataclasses import dataclass, InitVar, field
+from dataclasses import dataclass
 from functools import cached_property
-from sklearn.preprocessing import LabelEncoder
 
 import torch
 from walkjump.constants import TOKENS_AHO
@@ -10,15 +9,11 @@ from walkjump.constants import TOKENS_AHO
 class Batch:
     batch_tensor: torch.Tensor
     """(b, L)-shaped tensor of sequences"""
-    token_list: InitVar[list[str]] = TOKENS_AHO
-    alphabet: LabelEncoder = field(init=False)
-
-    def __post_init__(self, token_list: list[str]):
-        self.alphabet = LabelEncoder().fit(token_list)
+    tokens: list[str] = TOKENS_AHO
 
     @property
     def vocab_size(self) -> int:
-        return len(self.alphabet.classes_)
+        return len(self.token_list)
 
     @classmethod
     def from_tensor_pylist(
