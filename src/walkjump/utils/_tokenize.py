@@ -1,5 +1,6 @@
-import torch
 import re
+
+import torch
 from sklearn.preprocessing import LabelEncoder
 
 

@@ -19,3 +19,4 @@ def test_token_to_string_tofrom_tensor(aho_alphabet_encoder, aho_sequence):  # n
             from_logits=True,
         )[0]
     )
+    print("ok")
