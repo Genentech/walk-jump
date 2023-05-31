@@ -1,0 +1,4 @@
+.vscode
+**/*.sw[op]
+**/.DS_Store
+**/*.egg-info/

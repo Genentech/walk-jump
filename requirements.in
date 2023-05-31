@@ -1,20 +1,15 @@
 biopython
-bs4
 edlib
 hydra-core >= 1.2.0
 jupyter
 ipykernel
 pandas
-plotly
 pyarrow
 lightning
 s3fs[boto3] # see https://github.com/fsspec/s3fs/issues/357
 scipy
 scikit-learn
-seaborn
-smart_open
 torch
-torchmetrics
 universal-pathlib
 wandb
 python-dotenv
