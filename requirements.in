@@ -6,11 +6,9 @@ ipykernel
 pandas
 pyarrow
 lightning
-s3fs[boto3] # see https://github.com/fsspec/s3fs/issues/357
+pandas
 scipy
 scikit-learn
 torch
-universal-pathlib
 wandb
 python-dotenv
-openpyxl

@@ -25,7 +25,7 @@ version_scheme = "no-guess-dev"
 local_scheme = "node-and-date"
 
 [tool.setuptools.package-data]
-"*" = ["*.yaml", "*.json", "*.dmnd", "*.parquet", "*.csv.gz", "*.npz", "*.pkl.gz", "*.csv"]
+"*" = ["*.yaml", "*.csv.gz"]
 
 [tool.mypy]
 show_error_codes = true
@@ -43,24 +43,12 @@ plugins = ["numpy.typing.mypy_plugin"]
 
 [[tool.mypy.overrides]]
 module = [
-    "Bio.*",
-    "edlib.*",
-    "matplotlib.*",
     "pandas.*",
-    "pyarrow.*",
-    "scipy.*",
-    "seaborn",
     "sklearn.*",
-    "tqdm.*",
-    "upath.*",
-    "transformers.*",
     "rdkit.*",
-    "prescient.*",
-    "smart_open.*",
     "anarci.*",
     "lightning.*",
     "torchvision.*",
-    "boto3.*",
 ]
 
 ignore_missing_imports = true
