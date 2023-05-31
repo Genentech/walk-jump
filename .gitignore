@@ -1,6 +1,0 @@
-.vscode
-**/.DS_Store
-**/*.egg-info/
-__pycache__
-.py[cx]
-.sw[op]

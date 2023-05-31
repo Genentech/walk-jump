@@ -1,8 +1,0 @@
-_target_: lightning.pytorch.loggers.WandbLogger
-save_dir: "."
-offline: false
-project: null 
-entity: null 
-group: null
-notes: null
-tags: null
