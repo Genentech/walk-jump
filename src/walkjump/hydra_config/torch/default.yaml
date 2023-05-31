@@ -1,3 +1,0 @@
-_target_: torch.set_float32_matmul_precision
-
-precision: medium

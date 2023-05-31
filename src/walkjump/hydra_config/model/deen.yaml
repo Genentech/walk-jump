@@ -1,4 +1,0 @@
-defaults:
-  - base
-
-_target_: walkjump.model.model.DEEN
