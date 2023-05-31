@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import cached_property
 
 import torch
@@ -9,11 +9,11 @@ from walkjump.constants import TOKENS_AHO
 class Batch:
     batch_tensor: torch.Tensor
     """(b, L)-shaped tensor of sequences"""
-    tokens: list[str] = TOKENS_AHO
+    tokens: list[str] = field(default_factory=lambda: TOKENS_AHO)
 
     @property
     def vocab_size(self) -> int:
-        return len(self.token_list)
+        return len(self.tokens)
 
     @classmethod
     def from_tensor_pylist(
