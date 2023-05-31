@@ -1,9 +1,9 @@
-from torch.utils.data import Dataset
+from dataclasses import InitVar, dataclass, field
+
 import pandas as pd
 import torch
-
-from dataclasses import dataclass, InitVar, field
 from sklearn.preprocessing import LabelEncoder
+from torch.utils.data import Dataset
 
 from walkjump.utils import token_string_to_tensor
 

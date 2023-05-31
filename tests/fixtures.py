@@ -1,7 +1,8 @@
-import pytest
-from walkjump.constants import TOKENS_AHO
-from sklearn.preprocessing import LabelEncoder
 import pandas as pd
+import pytest
+from sklearn.preprocessing import LabelEncoder
+
+from walkjump.constants import TOKENS_AHO
 
 
 @pytest.fixture(scope="session")
