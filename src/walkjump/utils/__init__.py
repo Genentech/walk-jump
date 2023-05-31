@@ -1,1 +1,2 @@
+from ._noise import isotropic_gaussian_noise_like
 from ._tokenize import token_string_from_tensor, token_string_to_tensor, tokenize_string

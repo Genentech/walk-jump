@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from functools import cached_property
 
 import torch
+
 from walkjump.constants import TOKENS_AHO
 
 
