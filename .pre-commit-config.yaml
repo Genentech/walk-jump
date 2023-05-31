@@ -1,6 +1,11 @@
 repos:
 - repo: https://github.com/charliermarsh/ruff-pre-commit
 repos:
+- repo: https://github.com/psf/black
+  rev: 22.6.0
+  hooks:
+  -   id: black
+      args: [--config=pyproject.toml]
 - repo: https://github.com/charliermarsh/ruff-pre-commit
   rev: 'v0.0.219'
   hooks:
