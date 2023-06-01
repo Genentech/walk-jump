@@ -1,7 +1,5 @@
 defaults:
-  - base
-  - hyperparameters: denoise_hp
+  - model_cfg/arch: bytenet
+  - model_cfg/hyperparameters: denoise_hp
 
-_target_: walkjump.model.model.DenoiseModel
-
-needs_gradients: false
+_target_: walkjump.model.DenoiseModel

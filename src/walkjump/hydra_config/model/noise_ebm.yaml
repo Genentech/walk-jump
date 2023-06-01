@@ -1,8 +1,8 @@
 defaults:
-  - base
-  - hyperparameters: lms_hp
-  - pretrained: default
+    - model_cfg/arch: lms
+    - model_cfg/hyperparameters: noise_ebm_hp
+    - model_cfg/pretrained: default
+    - model_cfg/sampler: default
 
-_target_: walkjump.model.model.NoiseEnergyModel
 
-needs_gradients: true
+_target_: walkjump.model.NoiseEnergyModel

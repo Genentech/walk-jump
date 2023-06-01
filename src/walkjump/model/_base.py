@@ -16,6 +16,8 @@ _DEFAULT_TRAINING_PARAMETERS = {
 
 
 class TrainableScoreModel(LightningModule):
+    needs_gradients: bool = False
+
     def __init__(self, model_cfg: DictConfig):
         super().__init__()
         self.arch_cfg = model_cfg.arch
@@ -23,7 +25,6 @@ class TrainableScoreModel(LightningModule):
             _DEFAULT_TRAINING_PARAMETERS
         )
         self.sigma = self.training_cfg.sigma
-        self.needs_gradients = model_cfg.needs_gradients
 
         self.model = hydra.utils.instantiate(self.arch_cfg)
         self.save_hyperparameters(logger=False)

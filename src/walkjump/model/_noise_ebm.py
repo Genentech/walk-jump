@@ -17,6 +17,8 @@ class NoiseEnergyModel(TrainableScoreModel):
     """Model learns to approximate the noise;
     Parameterized by an EBM with a pretrained Score-based Bayes estimator."""
 
+    needs_gradients: bool = True
+
     def __init__(self, model_cfg: DictConfig):
         super().__init__(model_cfg)
 
@@ -86,8 +88,8 @@ class NoiseEnergyModel(TrainableScoreModel):
         y_fake = walk(random_seeds, self, self.training_sampler_fn)
         y_real = self.apply_noise(batch.x)
 
-        energy_real, _ = self.model.energy_model(y_real)
-        energy_fake, _ = self.model.energy_model(y_fake)
+        energy_real, _ = self.model(y_real)
+        energy_fake, _ = self.model(y_fake)
 
         cdiv_coeff = 1.0
 
