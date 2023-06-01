@@ -23,7 +23,7 @@ class NoiseEnergyModel(TrainableScoreModel):
         if model_cfg.get("pretrained"):
             self.denoise_model = hydra.utils.instantiate(model_cfg.pretrained)
         else:
-            self.denise_model = _NullDenoiser()
+            self.denoise_model = _NullDenoiser()
 
         self.training_sampler_fn = hydra.utils.instantiate(model_cfg.sampler)
 
@@ -80,9 +80,7 @@ class NoiseEnergyModel(TrainableScoreModel):
 
     def compute_loss(self, batch: AbBatch) -> torch.Tensor:
         random_seeds = torch.nn.functional.one_hot(
-            torch.randint(
-                0, self.training_cfg.n_tokens, (batch.x.size(0), self.arch_cfg.chain_len)
-            ),
+            torch.randint(0, self.arch_cfg.n_tokens, (batch.x.size(0), self.arch_cfg.chain_len)),
             num_classes=self.arch_cfg.n_tokens,
         )
         y_fake = walk(random_seeds, self, self.training_sampler_fn)
