@@ -1,4 +1,7 @@
 defaults:
   - _self_
   - arch: bytenet
-  - training: default
+  - hyperparameters: default
+
+needs_gradients: false
+

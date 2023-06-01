@@ -1,4 +1,7 @@
 defaults:
   - base
+  - pretrained: default
 
 _target_: walkjump.model.model.NoiseEnergyModel
+
+needs_gradients: true

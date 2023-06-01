@@ -2,3 +2,5 @@ defaults:
   - base
 
 _target_: walkjump.model.model.DenoiseModel
+
+needs_gradients: false
