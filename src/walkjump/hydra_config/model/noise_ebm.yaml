@@ -1,5 +1,6 @@
 defaults:
   - base
+  - hyperparameters: lms_hp
   - pretrained: default
 
 _target_: walkjump.model.model.NoiseEnergyModel

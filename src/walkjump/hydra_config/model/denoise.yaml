@@ -1,5 +1,6 @@
 defaults:
   - base
+  - hyperparameters: denoise_hp
 
 _target_: walkjump.model.model.DenoiseModel
 

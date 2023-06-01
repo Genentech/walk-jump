@@ -1,9 +1,3 @@
 lr: 0.0001
 weight_decay: 0.01
-batch_size: 64
-warmup_batches: 1
-lr_start_factor: 0.1
 sigma: 1.0
-beta1: 0.9
-ckpt_file: null
-n_tokens: 21
