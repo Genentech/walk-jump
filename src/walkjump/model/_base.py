@@ -1,12 +1,8 @@
-from typing import Optional
-
 import hydra
 import torch
 from lightning.pytorch import LightningModule
 from omegaconf import DictConfig
-from torch.optim.lr_scheduler import LinearLR
 
-from walkjump._optim import AdamW
 from walkjump.data import AbBatch
 
 _DEFAULT_TRAINING_PARAMETERS = {
@@ -15,15 +11,20 @@ _DEFAULT_TRAINING_PARAMETERS = {
     "lr_start_factor": 0.0001,
     "weight_decay": 0.01,
     "warmup_batches": 0.01,
+    "beta1": 0.9,
 }
 
 
 class TrainableScoreModel(LightningModule):
-    def __init__(self, arch: DictConfig, training: Optional[DictConfig] = None):
+    needs_gradients: bool = False
+
+    def __init__(self, model_cfg: DictConfig):
         super().__init__()
-        self.arch_cfg = arch
-        self.training_cfg = training
-        self.sigma = (self.training_cfg or DictConfig(_DEFAULT_TRAINING_PARAMETERS)).get("sigma")
+        self.arch_cfg = model_cfg.arch
+        self.training_cfg = model_cfg.get("hyperparameters") or DictConfig(
+            _DEFAULT_TRAINING_PARAMETERS
+        )
+        self.sigma = self.training_cfg.sigma
 
         self.model = hydra.utils.instantiate(self.arch_cfg)
         self.save_hyperparameters(logger=False)
@@ -32,14 +33,14 @@ class TrainableScoreModel(LightningModule):
         return self.score(y)
 
     def configure_optimizers(self):
-        opt = AdamW(
+        opt = torch.optim.AdamW(
             self.parameters(), lr=self.training_cfg.lr, weight_decay=self.training_cfg.weight_decay
         )
 
         return {
             "optimizer": opt,
             "lr_scheduler": {
-                "scheduler": LinearLR(
+                "scheduler": torch.optim.lr_scheduler.LinearLR(
                     opt,
                     start_factor=self.training_cfg.lr_start_factor,
                     end_factor=1.0,

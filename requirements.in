@@ -7,8 +7,6 @@ pandas
 pyarrow
 lightning
 pandas
-scipy
 scikit-learn
-torch
 wandb
 python-dotenv
