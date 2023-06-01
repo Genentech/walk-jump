@@ -8,6 +8,8 @@ from ._base import TrainableScoreModel
 
 
 class DenoiseModel(TrainableScoreModel):
+    needs_gradients: bool = False
+
     def score(self, y: torch.Tensor) -> torch.Tensor:
         return (self.model(y) - y) / pow(self.sigma, 2)
 
