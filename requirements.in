@@ -5,7 +5,7 @@ jupyter
 ipykernel
 pandas
 pyarrow
-lightning
+lightning==1.9.0
 pandas
 scikit-learn
 wandb

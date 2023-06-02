@@ -1,10 +1,10 @@
 import dotenv
 import hydra
 import lightning.pytorch as pl
-import wandb
 from lightning.pytorch.utilities import rank_zero_only
 from omegaconf import DictConfig, OmegaConf
 
+import wandb
 from walkjump.cmdline.utils import instantiate_callbacks
 
 dotenv.load_dotenv(".env")
@@ -22,7 +22,11 @@ def train(cfg: DictConfig) -> bool:
 
     datamodule = hydra.utils.instantiate(cfg.data)
     model = hydra.utils.instantiate(cfg.model, _recursive_=False)
-    logger = hydra.utils.instantiate(cfg.logger)
+
+    if not cfg.dryrun:
+        logger = hydra.utils.instantiate(cfg.logger)
+    else:
+        logger = None
 
     callbacks = instantiate_callbacks(cfg.get("callbacks"))
 
