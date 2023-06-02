@@ -5,7 +5,7 @@ authors = [{name = "Prescient Design"}]
 dynamic = ["version", "readme", "dependencies", "optional-dependencies"]
 
 [project.scripts]
-walkjump_train = "walkjump.cmdline.train:main"
+walkjump_train = "walkjump.cmdline:train"
 walkjump_sample = "walkjump.cmdline.sample:main"
 
 [build-system]
