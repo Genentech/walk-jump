@@ -13,13 +13,9 @@ class DummyScoreModel(TrainableScoreModel):
     def __init__(self):
         super().__init__(dummy_score_model_cfg)
 
-    @property
-    def noise_factor(self) -> float:
-        return 1.0
-
-    def score(self, ys: torch.Tensor) -> torch.Tensor:
+    def score(self, y: torch.Tensor) -> torch.Tensor:
         # WARNING: This definition of the score function is valid only for the DenoiseModel!
-        return (self.nu(ys) - ys) / (self.noise_factor**2)
+        return (self.nu(y) - y) / pow(self.sigma, 2)
 
     def nu(self, ys: torch.Tensor) -> torch.Tensor:
         """Placeholder nu"""
@@ -85,3 +81,6 @@ def test_sample_sequences_multiseed():
 
     seqs = walkjump(seeds, model, steps=20, num_samples=num_samples)
     assert len(seqs) == num_samples * 5
+    assert {"fv_heavy_aho", "fv_light_aho", "fv_heavy_aho_seed", "fv_light_aho_seed"}.issubset(
+        set(seqs.columns)
+    )
