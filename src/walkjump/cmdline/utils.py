@@ -1,11 +1,15 @@
 from typing import Iterable
 
 import hydra
+import pandas as pd
+import torch
 from lightning.pytorch.callbacks import Callback
 from omegaconf import DictConfig
 
-from walkjump.constants import LENGTH_FV_HEAVY_AHO, LENGTH_FV_LIGHT_AHO, RANGES_AHO
+from walkjump.constants import ALPHABET_AHO, LENGTH_FV_HEAVY_AHO, LENGTH_FV_LIGHT_AHO, RANGES_AHO
+from walkjump.data import AbDataset
 from walkjump.model import DenoiseModel, NoiseEnergyModel
+from walkjump.utils import random_discrete_seeds, token_string_from_tensor
 
 model_typer = {
     "denoise": DenoiseModel,
@@ -15,7 +19,8 @@ model_typer = {
 _ERR_MSG_UNRECOGNIZED_REGION = "Could not parse these regions to redesign: {regions}"
 _LOG_MSG_INSTANTIATE_MODEL = "Loading {model_type} model from {checkpoint_path}"
 
-def build_redesign_mask(redesign_regions: Iterable[str]) -> list[int]:
+
+def instantiate_redesign_mask(redesign_regions: Iterable[str]) -> list[int]:
     unrecognized_regions = set(redesign_regions) - set(RANGES_AHO.keys())
     assert not unrecognized_regions, _ERR_MSG_UNRECOGNIZED_REGION.format(
         regions=unrecognized_regions
@@ -34,8 +39,18 @@ def build_redesign_mask(redesign_regions: Iterable[str]) -> list[int]:
     )
     return mask_idxs
 
+
 def instantiate_seeds(seeds_cfg: DictConfig) -> list[str]:
-    pass
+    if seeds_cfg.seeds == "denovo":
+        seed_batch = random_discrete_seeds(seeds_cfg.limit_seeds, onehot=False)
+    else:
+        seed_df = pd.read_csv(seeds_cfg.seeds)
+        dataset = AbDataset(seed_df)
+        seed_batch = torch.stack(
+            [dataset[i] for i in range(seeds_cfg.limit_seeds or len(dataset))], dim=0
+        )
+
+    return token_string_from_tensor(seed_batch, alphabet=ALPHABET_AHO, from_logits=False)
 
 
 def instantiate_model_for_sample_mode(

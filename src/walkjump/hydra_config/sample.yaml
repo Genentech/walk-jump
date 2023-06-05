@@ -18,6 +18,7 @@ designs:
   save_trajectory: false
   seeds: denovo
   num_samples: 100
+  limit_seeds: 10
 
 logging:
   wandb_project: ??? 

@@ -4,8 +4,7 @@ import wandb
 from lightning.pytorch.utilities import rank_zero_only
 from omegaconf import DictConfig, OmegaConf
 
-from walkjump.sampling import walkjump
-from walkjump.cmdline.utils import build_redesign_mask
+from walkjump.cmdline.utils import instantiate_redesign_mask, instantiate_seeds
 
 
 @hydra.main(version_base=None, config_path="../hydra_config", config_name="sample")
@@ -27,4 +26,5 @@ def main(cfg: DictConfig) -> None:
 
     model.to(device)
 
-    mask_idxs = build_redesign_mask(cfg.designs.redesign_regions or [])
+    instantiate_redesign_mask(cfg.designs.redesign_regions or [])
+    instantiate_seeds(cfg.designs)

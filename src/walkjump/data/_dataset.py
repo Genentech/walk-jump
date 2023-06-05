@@ -5,13 +5,14 @@ import torch
 from sklearn.preprocessing import LabelEncoder
 from torch.utils.data import Dataset
 
+from walkjump.constants import ALPHABET_AHO
 from walkjump.utils import token_string_to_tensor
 
 
 @dataclass
 class AbDataset(Dataset):
     df: pd.DataFrame
-    alphabet_or_token_list: InitVar[LabelEncoder | list[str]]
+    alphabet_or_token_list: InitVar[LabelEncoder | list[str]] = ALPHABET_AHO
     alphabet: LabelEncoder = field(init=False)
 
     def __post_init__(self, alphabet_or_token_list: LabelEncoder | list[str]):
