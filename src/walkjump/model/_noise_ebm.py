@@ -4,6 +4,7 @@ from omegaconf import DictConfig
 
 from walkjump.data import AbBatch
 from walkjump.sampling import walk
+from walkjump.utils import random_discrete_seeds
 
 from ._base import TrainableScoreModel
 
@@ -81,10 +82,13 @@ class NoiseEnergyModel(TrainableScoreModel):
         return self.denoise_model.xhat(y)
 
     def compute_loss(self, batch: AbBatch) -> torch.Tensor:
-        random_seeds = torch.nn.functional.one_hot(
-            torch.randint(0, self.arch_cfg.n_tokens, (batch.x.size(0), self.arch_cfg.chain_len)),
-            num_classes=self.arch_cfg.n_tokens,
+        random_seeds = random_discrete_seeds(
+            batch.x.size(0),
+            n_tokens=self.arch_cfg.n_tokens,
+            seed_length=self.arch_cfg.chain_len,
+            onehot=True,
         )
+
         y_fake = walk(random_seeds, self, self.training_sampler_fn)
         y_real = self.apply_noise(batch.x)
 

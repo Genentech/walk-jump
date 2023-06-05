@@ -6,7 +6,7 @@ from lightning.pytorch import LightningDataModule
 from sklearn.preprocessing import LabelEncoder
 from torch.utils.data import DataLoader
 
-from walkjump.constants import TOKENS_AHO
+from walkjump.constants import ALPHABET_AHO
 
 from ._batch import AbBatch
 from ._dataset import AbDataset
@@ -19,13 +19,12 @@ class AbDataModule(LightningDataModule):
     num_workers: int = 1
 
     dataset: pd.DataFrame = field(init=False)
-    alphabet: LabelEncoder = field(init=False)
+    alphabet: LabelEncoder = field(init=False, default=ALPHABET_AHO)
 
     def setup(self, stage: str):
         match stage:
             case "fit" | "validate" | "test":
                 self.dataset = pd.read_csv(self.csv_data_path, compression="gzip")
-                self.alphabet = LabelEncoder().fit(TOKENS_AHO)
             case _:
                 raise ValueError(f"Unreognized 'stage': {stage}")
 

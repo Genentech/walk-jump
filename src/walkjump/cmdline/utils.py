@@ -15,7 +15,6 @@ model_typer = {
 _ERR_MSG_UNRECOGNIZED_REGION = "Could not parse these regions to redesign: {regions}"
 _LOG_MSG_INSTANTIATE_MODEL = "Loading {model_type} model from {checkpoint_path}"
 
-
 def build_redesign_mask(redesign_regions: Iterable[str]) -> list[int]:
     unrecognized_regions = set(redesign_regions) - set(RANGES_AHO.keys())
     assert not unrecognized_regions, _ERR_MSG_UNRECOGNIZED_REGION.format(
@@ -34,6 +33,9 @@ def build_redesign_mask(redesign_regions: Iterable[str]) -> list[int]:
         set(range(0, LENGTH_FV_HEAVY_AHO + LENGTH_FV_LIGHT_AHO)) - redesign_accumulator
     )
     return mask_idxs
+
+def instantiate_seeds(seeds_cfg: DictConfig) -> list[str]:
+    pass
 
 
 def instantiate_model_for_sample_mode(

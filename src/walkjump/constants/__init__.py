@@ -6,4 +6,4 @@ from ._ranges_aho import (
     RANGES_AHO,
     REGION_AHO,
 )
-from ._tokens import TOKEN_GAP, TOKENS_AA, TOKENS_AHO
+from ._tokens import ALPHABET_AHO, TOKEN_GAP, TOKENS_AA, TOKENS_AHO
