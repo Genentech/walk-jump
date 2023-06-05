@@ -9,7 +9,7 @@ from walkjump.sampling import walkjump
 
 
 @hydra.main(version_base=None, config_path="../hydra_config", config_name="sample")
-def main(cfg: DictConfig) -> None:
+def sample(cfg: DictConfig) -> None:
     log_cfg = OmegaConf.to_container(cfg, throw_on_missing=True, resolve=True)
 
     wandb.require("service")
