@@ -5,6 +5,7 @@ from lightning.pytorch.utilities import rank_zero_only
 from omegaconf import DictConfig, OmegaConf
 
 from walkjump.cmdline.utils import instantiate_redesign_mask, instantiate_seeds
+from walkjump.sampling import walkjump
 
 
 @hydra.main(version_base=None, config_path="../hydra_config", config_name="sample")
@@ -26,5 +27,18 @@ def main(cfg: DictConfig) -> None:
 
     model.to(device)
 
-    instantiate_redesign_mask(cfg.designs.redesign_regions or [])
-    instantiate_seeds(cfg.designs)
+    mask_idxs = instantiate_redesign_mask(cfg.designs.redesign_regions or [])
+    seeds = instantiate_seeds(cfg.designs)
+    samples = walkjump(
+        seeds,
+        model,
+        delta=cfg.langevin.delta,
+        lipschitz=cfg.langevin.lipschitz,
+        friction=cfg.langevin.friction,
+        steps=cfg.langevin.steps,
+        num_samples=cfg.designs.num_samples,
+        mask_idxs=mask_idxs,
+        chunksize=cfg.designs.chunksize,
+        save_trajectory=cfg.designs.save_trajectory,
+    )
+    samples

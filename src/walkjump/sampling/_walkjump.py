@@ -166,7 +166,7 @@ def walkjump(
     assert delta < 1
 
     sampler_fn = create_sampler_fn(
-        verbose=True,
+        verbose=verbose,
         mask_idxs=mask_idxs,
         delta=delta * model.sigma,
         friction=friction,
