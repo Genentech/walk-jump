@@ -32,7 +32,7 @@ def walk(
     torch.Tensor
         Samples from Y
     """
-    seed_tensor = seed_tensor.to(model.device)
+    seed_tensor = seed_tensor.to(model.device)  # type: ignore[arg-type]
     list_ys = []
 
     for seed_chunk in seed_tensor.chunk(chunksize):

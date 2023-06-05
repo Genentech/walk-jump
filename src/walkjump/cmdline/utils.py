@@ -1,13 +1,67 @@
+from typing import Iterable
+
 import hydra
 from lightning.pytorch.callbacks import Callback
 from omegaconf import DictConfig
 
+from walkjump.constants import LENGTH_FV_HEAVY_AHO, LENGTH_FV_LIGHT_AHO, RANGES_AHO
 from walkjump.model import DenoiseModel, NoiseEnergyModel
 
 model_typer = {
     "denoise": DenoiseModel,
     "noise_ebm": NoiseEnergyModel,
 }
+
+_ERR_MSG_UNRECOGNIZED_REGION = "Could not parse these regions to redesign: {regions}"
+_LOG_MSG_INSTANTIATE_MODEL = "Loading {model_type} model from {checkpoint_path}"
+
+
+def build_redesign_mask(redesign_regions: Iterable[str]) -> list[int]:
+    unrecognized_regions = set(redesign_regions) - set(RANGES_AHO.keys())
+    assert not unrecognized_regions, _ERR_MSG_UNRECOGNIZED_REGION.format(
+        regions=unrecognized_regions
+    )
+
+    redesign_accumulator = set()
+    for region in redesign_regions:
+        chain = region[0]
+        aho_start, aho_end = RANGES_AHO[region]
+        shift = LENGTH_FV_HEAVY_AHO * int(chain == "L")
+
+        redesign_accumulator |= set(range(aho_start + shift, aho_end + shift))
+
+    mask_idxs = sorted(
+        set(range(0, LENGTH_FV_HEAVY_AHO + LENGTH_FV_LIGHT_AHO)) - redesign_accumulator
+    )
+    return mask_idxs
+
+
+def instantiate_model_for_sample_mode(
+    sample_mode_model_cfg: DictConfig,
+) -> NoiseEnergyModel | DenoiseModel:
+    print(
+        "[instantiate_model_for_sample_mode]",
+        _LOG_MSG_INSTANTIATE_MODEL.format(
+            model_type=sample_mode_model_cfg.model_type,
+            checkpoint_path=sample_mode_model_cfg.checkpoint_path,
+        ),
+    )
+    model = model_typer[sample_mode_model_cfg.model_type].load_from_checkpoint(
+        sample_mode_model_cfg.checkpoint_path
+    )
+    if isinstance(model, NoiseEnergyModel) and sample_mode_model_cfg.denoise_path is not None:
+
+        print(
+            "[instantiate_model_for_sample_mode] (model.denoise_model)",
+            _LOG_MSG_INSTANTIATE_MODEL.format(
+                model_type="denoise", checkpoint_path=sample_mode_model_cfg.denoise_path
+            ),
+        )
+        model.denoise_model = DenoiseModel.load_from_checkpoint(sample_mode_model_cfg.denoise_path)
+        model.denoise_model.eval()
+        model.denoise_model.training = False
+
+    return model
 
 
 def instantiate_callbacks(callbacks_cfg: DictConfig) -> list[Callback]:
