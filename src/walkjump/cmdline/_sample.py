@@ -9,7 +9,7 @@ from walkjump.sampling import walkjump
 
 
 @hydra.main(version_base=None, config_path="../hydra_config", config_name="sample")
-def sample(cfg: DictConfig) -> None:
+def sample(cfg: DictConfig) -> bool:
     log_cfg = OmegaConf.to_container(cfg, throw_on_missing=True, resolve=True)
 
     wandb.require("service")
@@ -43,3 +43,5 @@ def sample(cfg: DictConfig) -> None:
         sample_df.drop_duplicates(subset=["fv_heavy_aho", "fv_light_aho"], inplace=True)
         print(f"Writing {len(sample_df)} samples to {cfg.designs.output_csv}")
         sample_df.to_csv(cfg.designs.output_csv, index=False)
+    
+    return True
