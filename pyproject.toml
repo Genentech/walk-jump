@@ -6,7 +6,7 @@ dynamic = ["version", "readme", "dependencies", "optional-dependencies"]
 
 [project.scripts]
 walkjump_train = "walkjump.cmdline:train"
-walkjump_sample = "walkjump.cmdline.sample:main"
+walkjump_sample = "walkjump.cmdline.:sample"
 
 [build-system]
 requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
@@ -67,3 +67,7 @@ line-length = 100
 line_length = 100
 multi_line_output = 3
 use_parentheses = true
+force_grid_wrap = 0
+include_trailing_comma = true
+ensure_newline_before_comments = true
+known_third_party=["wandb"]

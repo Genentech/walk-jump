@@ -1,10 +1,10 @@
 import dotenv
 import hydra
 import lightning.pytorch as pl
+import wandb
 from lightning.pytorch.utilities import rank_zero_only
 from omegaconf import DictConfig, OmegaConf
 
-import wandb
 from walkjump.cmdline.utils import instantiate_callbacks
 
 dotenv.load_dotenv(".env")
