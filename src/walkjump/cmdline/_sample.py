@@ -29,7 +29,7 @@ def main(cfg: DictConfig) -> None:
 
     mask_idxs = instantiate_redesign_mask(cfg.designs.redesign_regions or [])
     seeds = instantiate_seeds(cfg.designs)
-    samples = walkjump(
+    sample_df = walkjump(
         seeds,
         model,
         delta=cfg.langevin.delta,
@@ -39,6 +39,7 @@ def main(cfg: DictConfig) -> None:
         num_samples=cfg.designs.num_samples,
         mask_idxs=mask_idxs,
         chunksize=cfg.designs.chunksize,
-        save_trajectory=cfg.designs.save_trajectory,
     )
-    samples
+    sample_df.drop_duplicates(subset=["fv_heavy_aho", "fv_light_aho"], inplace=True)
+    print(f"Writing {len(sample_df)} samples to {cfg.designs.output_csv}")
+    sample_df.to_csv(cfg.designs.output_csv, index=False)

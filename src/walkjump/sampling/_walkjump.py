@@ -1,8 +1,9 @@
 from typing import Callable, Optional
 
+import pandas as pd
 import torch
 
-from walkjump.constants import ALPHABET_AHO
+from walkjump.constants import ALPHABET_AHO, LENGTH_FV_HEAVY_AHO, LENGTH_FV_LIGHT_AHO
 from walkjump.model import TrainableScoreModel
 from walkjump.utils import token_string_from_tensor, token_string_to_tensor
 
@@ -123,8 +124,7 @@ def walkjump(
     verbose: bool = True,
     mask_idxs: Optional[list[int]] = None,
     chunksize: int = 1,
-    save_trajectory: bool = False,
-) -> list[str]:
+) -> pd.DataFrame:
     """
     Sample sequences
 
@@ -174,7 +174,7 @@ def walkjump(
         steps=steps,
     )
 
-    ys = walk(seed_tensor, model, sampler_fn, chunksize=chunksize, save_trajectory=save_trajectory)
+    ys = walk(seed_tensor, model, sampler_fn, chunksize=chunksize, save_trajectory=False)
     xhats = jump(ys, model, chunksize=chunksize)
 
     # TODO: do we need to restore original x in masked positions
@@ -183,4 +183,21 @@ def walkjump(
 
     seqs = token_string_from_tensor(xhats, ALPHABET_AHO, from_logits=True)
 
-    return seqs
+    fv_heavy_aho_sample_list = [seq[:LENGTH_FV_HEAVY_AHO] for seq in seqs]
+    fv_light_aho_sample_list = [seq[LENGTH_FV_HEAVY_AHO:] for seq in seqs]
+
+    fv_heavy_aho_seed_list = token_string_from_tensor(
+        seed_tensor[:, :LENGTH_FV_HEAVY_AHO], ALPHABET_AHO, from_logits=True
+    )
+    fv_light_aho_seed_list = token_string_from_tensor(
+        seed_tensor[:, :LENGTH_FV_LIGHT_AHO], ALPHABET_AHO, from_logits=True
+    )
+
+    return pd.DataFrame(
+        {
+            "fv_heavy_aho": fv_heavy_aho_sample_list,
+            "fv_light_aho": fv_light_aho_sample_list,
+            "fv_heavy_aho_seed": fv_heavy_aho_seed_list,
+            "fv_light_aho_seed": fv_light_aho_seed_list,
+        }
+    )

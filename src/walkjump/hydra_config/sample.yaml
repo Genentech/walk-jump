@@ -15,13 +15,8 @@ langevin:
 designs:
   output_csv: samples.csv
   redesign_regions: null
-  save_trajectory: false
   seeds: denovo
   num_samples: 100
   limit_seeds: 10
-
-logging:
-  wandb_project: ??? 
-  wandb_entity: ???
 
 device: null
