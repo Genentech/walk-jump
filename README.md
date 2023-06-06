@@ -2,40 +2,23 @@
 
 This is the official open source repository for [discrete Walk-Jump Sampling](TODO) developed by [ncfrey](https://github.com/ncfrey), [djberenberg](https://github.com/djberenberg), [kleinhenz](https://github.com/kleinhenz), and [saeedsaremi](https://github.com/saeedsaremi), from [Prescient Design, a Genentech accelerator.](https://gene.com/prescient)
 
-
-## Notes
-
-
 ## Setup
 Assuming you have [miniconda](https://docs.conda.io/en/latest/miniconda.html) installed, clone the repository, navigate inside, and run:
 ```bash
 ./scripts/install.sh
 ```
 
+### Training
+The entrypoint `train` is the main driver for training and accepts parameters using Hydra syntax.
+The available parameters for configuration can be found by running `train` --help or by looking in the `src/walkjump/hydra_config` directory
 
-### Model weights
-PyTorch model weights and hyper-parameter configs for the models trained on antibody datasets as described in the manuscript are stored in `models` directory.
+### Sampling
+The entrypoint `sample` is the main driver for training and accepts parameters using Hydra syntax.
+The available parameters for configuration can be found by running `sample` --help or by looking in the `src/walkjump/hydra_config` directory
 
-### Run sampling
-To sample using a trained model, users can run the following scripts:
-
-```
-$ python...
-```
 ## Contributing
 
-We welcome contributions. If you would like to submit pull requests, please make sure you base your pull requests off the latest version of the `main` branch. Keep your fork synced by setting its upstream remote to `Genentech/walk-jump` and running:
-
-```sh
-# If your branch only has commits from master but is outdated:
-
-$ git pull --ff-only upstream main
-
-
-# If your branch is outdated and has diverged from main branch:
-
-$ git pull --rebase upstream main
-```
+We welcome contributions. If you would like to submit pull requests, please make sure you base your pull requests off the latest version of the `main` branch.
 
 ## License
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at https://www.apache.org/licenses/LICENSE-2.0.

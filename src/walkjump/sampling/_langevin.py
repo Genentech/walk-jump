@@ -21,7 +21,7 @@ def sachsetal(
 
     options = _DEFAULT_SAMPLING_OPTIONS | sampling_options  # overwrite
 
-    delta, gamma, lipschitz = options["delta"], options["gamma"], options["lipschitz"]
+    delta, gamma, lipschitz = options["delta"], options["friction"], options["lipschitz"]
 
     step_iterator = (
         trange(int(options["steps"]), desc="Sachs, et al", leave=False)
