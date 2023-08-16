@@ -1,6 +1,6 @@
 # discrete Walk-Jump Sampling (dWJS)
 
-This is the official open source repository for [discrete Walk-Jump Sampling](TODO) developed by [ncfrey](https://github.com/ncfrey), [djberenberg](https://github.com/djberenberg), [kleinhenz](https://github.com/kleinhenz), and [saeedsaremi](https://github.com/saeedsaremi), from [Prescient Design, a Genentech accelerator.](https://gene.com/prescient)
+This is the official open source repository for [discrete Walk-Jump Sampling](https://arxiv.org/abs/2306.12360) developed by [ncfrey](https://github.com/ncfrey), [djberenberg](https://github.com/djberenberg), [kleinhenz](https://github.com/kleinhenz), and [saeedsaremi](https://github.com/saeedsaremi), from [Prescient Design, a Genentech accelerator.](https://gene.com/prescient)
 
 ## Setup
 Assuming you have [miniconda](https://docs.conda.io/en/latest/miniconda.html) installed, clone the repository, navigate inside, and run:
@@ -29,4 +29,12 @@ Unless required by applicable law or agreed to in writing, software distributed 
 ## Citations
 If you use the code and/or model, please cite:
 ```
+@article{frey2023protein,
+      title={Protein Discovery with Discrete Walk-Jump Sampling}, 
+      author={Nathan C. Frey and Daniel Berenberg and Karina Zadorozhny and Joseph Kleinhenz and Julien Lafrance-Vanasse and Isidro Hotzel and Yan Wu and Stephen Ra and Richard Bonneau and Kyunghyun Cho and Andreas Loukas and Vladimir Gligorijevic and Saeed Saremi},
+      year={2023},
+      eprint={2306.12360},
+      archivePrefix={arXiv},
+      primaryClass={q-bio.BM}
+}
 ```
