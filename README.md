@@ -1,6 +1,6 @@
 # discrete Walk-Jump Sampling (dWJS)
 
-This is the official open source repository for discrete Walk-Jump sampling.
+This is the official open source repository for discrete Walk-Jump sampling. See our experimental results [here](./assets/experimental_results.pdf)!
 
 ## Setup
 Assuming you have [miniconda](https://docs.conda.io/en/latest/miniconda.html) installed, clone the repository, navigate inside, and run:
