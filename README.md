@@ -2,6 +2,8 @@
 
 This is the official open source repository for [discrete Walk-Jump Sampling](https://arxiv.org/abs/2306.12360) developed by [ncfrey](https://github.com/ncfrey), [djberenberg](https://github.com/djberenberg), [kleinhenz](https://github.com/kleinhenz), and [saeedsaremi](https://github.com/saeedsaremi), from [Prescient Design, a Genentech accelerator.](https://gene.com/prescient)
 
+See our experimental results immunizing against ERBB2 [here](./assets/experimental_results.pdf)!
+
 ## Setup
 Assuming you have [miniconda](https://docs.conda.io/en/latest/miniconda.html) installed, clone the repository, navigate inside, and run:
 ```bash
